@@ -1,23 +1,13 @@
 #pragma once
-#include "Database.h"
-#include "BookPool.h"
-#include "ShelfBuilder.h"
-#include "BookFactory.h"
-#include "NewMoveStrategy.h"
-#include "ExistingMoveStrategy.h"
-#include "Librarian.h"
-#include "LibraryReaderFactory.h"
+#include "LibraryFacade.h"
 
-class LibraryFacade {
+class LibraryModel {
 private:
-    Database* database;
-    Librarian* librarian;
-    BookPool* pool;
-    MoveStrategy* moveStrategy;
+	LibraryFacade* facade;
 
 public:
-    LibraryFacade();
-    ~LibraryFacade();
+	LibraryModel();
+	~LibraryModel();
 
     void createShelf(const std::string& shelfTitle);
     void displayShelves() const;

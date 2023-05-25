@@ -12,10 +12,10 @@ LibraryFacade::~LibraryFacade() {
     if (moveStrategy) delete moveStrategy;
 }
 
-void LibraryFacade::createShelf(const std::string & shelfName) {
-    Shelf shelf = ShelfBuilder(shelfName).build();
+void LibraryFacade::createShelf(const std::string & shelfTitle) {
+    Shelf shelf = ShelfBuilder(shelfTitle).build();
     database->addShelf(shelf);
-    librarian->notify("Added new shelf: " + shelfName);
+    librarian->notify("Added new shelf: " + shelfTitle);
 }
 
 void LibraryFacade::displayShelves() const {
