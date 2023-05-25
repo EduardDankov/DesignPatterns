@@ -13,7 +13,7 @@ void Database::addShelf(const Shelf& shelf) {
 
 void Database::displayShelves() {
     for (auto& shelf : shelves) {
-        std::cout << "Shelf: " << shelf.getTitle() << std::endl;
+        std::cout << "Shelf: " << shelf.getTitle() << " - " << (*shelf.getBooks()).size() << " book(s)" << std::endl;
         shelf.displayBooks();
     }
 }
