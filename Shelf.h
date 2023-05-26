@@ -19,4 +19,6 @@ public:
     void addBook(const Book& book);
     void removeBook(const Book& book);
     void displayBooks() const;
+
+    bool operator==(const Shelf& other);
 };

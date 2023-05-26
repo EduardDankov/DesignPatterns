@@ -12,4 +12,6 @@ public:
 
     std::string getName();
     void notify(const std::string& message);
+
+    bool operator==(const LibraryReader& other);
 };

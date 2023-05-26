@@ -12,6 +12,7 @@ public:
 	~LibraryController();
 
 	void run();
-	void run(int index);
+	void run(MenuSection section);
+	void run(MenuSection section, int index);
 };
 

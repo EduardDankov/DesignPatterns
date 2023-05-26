@@ -26,3 +26,7 @@ void Shelf::displayBooks() const {
         std::cout << "Title: \"" << book.getTitle() << "\", Author: " << book.getAuthor() << ", Page Count: " << book.getPageCount() << std::endl;
     }
 }
+
+bool Shelf::operator==(const Shelf& other) {
+    return this->title == other.title;
+}

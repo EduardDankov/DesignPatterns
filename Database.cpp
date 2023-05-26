@@ -12,7 +12,7 @@ void Database::addShelf(Shelf& shelf) {
 }
 
 void Database::removeShelf(Shelf& shelf) {
-    std::remove(shelves.begin(), shelves.end(), shelf);
+    shelves.erase(std::remove(shelves.begin(), shelves.end(), shelf), shelves.end());
 }
 
 void Database::displayShelves() {
@@ -36,7 +36,7 @@ void Database::addReader(LibraryReader& reader) {
 }
 
 void Database::removeReader(LibraryReader& reader) {
-    std::remove(readers.begin(), readers.end(), reader);
+    readers.erase(std::remove(readers.begin(), readers.end(), reader), readers.end());
 }
 
 void Database::displayReaders() {
