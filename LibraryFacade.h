@@ -20,6 +20,7 @@ public:
     ~LibraryFacade();
 
     void createShelf(const std::string& shelfTitle);
+    void deleteShelf(const std::string& shelfTitle);
     void displayShelves() const;
     void displayShelves(const std::string& title) const;
 
@@ -28,6 +29,7 @@ public:
     void moveBook(const std::string& bookTitle, const std::string& sourceTitle, const std::string& destinationTitle);
 
     void createReader(const std::string& readerName);
+    void deleteReader(const std::string& readerName);
     void displayReaders() const;
     void displayReaders(const std::string& title) const;
 

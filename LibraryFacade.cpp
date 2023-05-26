@@ -23,6 +23,25 @@ void LibraryFacade::createShelf(const std::string& shelfTitle) {
     librarian->notify("Added new shelf: " + shelfTitle);
 }
 
+void LibraryFacade::deleteShelf(const std::string& shelfTitle) {
+    Shelf* deleteShelf = nullptr;
+    for (auto& shelf : *(database->getShelves())) {
+        if (shelf.getTitle() == shelfTitle) {
+            deleteShelf = &shelf;
+        }
+    }
+    if (deleteShelf) {
+        for (auto& book : *(deleteShelf->getBooks())) {
+            pool->returnBook(book);
+        }
+        database->removeShelf(*deleteShelf);
+        librarian->notify("Removed the " + shelfTitle + " shelf");
+    }
+    else {
+        throw "The shelf with such title doesn't exist!";
+    }
+}
+
 void LibraryFacade::displayShelves() const {
     database->displayShelves();
 }
@@ -122,6 +141,22 @@ void LibraryFacade::createReader(const std::string& readerName) {
     }
     LibraryReader reader = LibraryReaderFactory::createLibrarySubscriber(readerName);
     database->addReader(reader);
+}
+
+void LibraryFacade::deleteReader(const std::string& readerName) {
+    LibraryReader* deleteReader = nullptr;
+    for (auto& reader : *(database->getReaders())) {
+        if (reader.getName() == readerName) {
+            deleteReader = &reader;
+        }
+    }
+    if (deleteReader) {
+        librarian->unsubscribe(deleteReader);
+        database->removeReader(*deleteReader);
+    }
+    else {
+        throw "The reader with such name doesn't exist!";
+    }
 }
 
 void LibraryFacade::displayReaders() const {

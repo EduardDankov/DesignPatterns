@@ -11,6 +11,10 @@ void Database::addShelf(Shelf& shelf) {
     shelves.push_back(shelf);
 }
 
+void Database::removeShelf(Shelf& shelf) {
+    std::remove(shelves.begin(), shelves.end(), shelf);
+}
+
 void Database::displayShelves() {
     for (auto& shelf : shelves) {
         std::cout << "Shelf: " << shelf.getTitle() << " - " << (*shelf.getBooks()).size() << " book(s)" << std::endl;
@@ -28,12 +32,11 @@ std::vector<Shelf>* Database::getShelves() {
 }
 
 void Database::addReader(LibraryReader& reader) {
-    for (auto& r : readers) {
-        if (r.getName() == reader.getName()) {
-            return throw "The reader with such name already exists!";
-        }
-    }
     readers.push_back(reader);
+}
+
+void Database::removeReader(LibraryReader& reader) {
+    std::remove(readers.begin(), readers.end(), reader);
 }
 
 void Database::displayReaders() {

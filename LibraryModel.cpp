@@ -12,6 +12,10 @@ void LibraryModel::createShelf(const std::string& shelfTitle) {
 	facade->createShelf(shelfTitle);
 }
 
+void LibraryModel::deleteShelf(const std::string& shelfTitle) {
+	facade->deleteShelf(shelfTitle);
+}
+
 void LibraryModel::displayShelves() const {
 	facade->displayShelves();
 }
@@ -34,6 +38,10 @@ void LibraryModel::moveBook(const std::string& bookTitle, const std::string& sou
 
 void LibraryModel::createReader(const std::string& readerName) {
 	facade->createReader(readerName);
+}
+
+void LibraryModel::deleteReader(const std::string& readerName) {
+	facade->deleteReader(readerName);
 }
 
 void LibraryModel::displayReaders() const {
