@@ -12,7 +12,12 @@ LibraryFacade::~LibraryFacade() {
     if (moveStrategy) delete moveStrategy;
 }
 
-void LibraryFacade::createShelf(const std::string & shelfTitle) {
+void LibraryFacade::createShelf(const std::string& shelfTitle) {
+    for (auto& shelf : *(database->getShelves())) {
+        if (shelf.getTitle() == shelfTitle) {
+            return throw "The shelf with such title already exists!";
+        }
+    }
     Shelf shelf = ShelfBuilder(shelfTitle).build();
     database->addShelf(shelf);
     librarian->notify("Added new shelf: " + shelfTitle);
@@ -110,6 +115,11 @@ void LibraryFacade::moveBook(const std::string& bookTitle, const std::string& so
 }
 
 void LibraryFacade::createReader(const std::string& readerName) {
+    for (auto& reader : *(database->getReaders())) {
+        if (reader.getName() == readerName) {
+            return throw "The reader with such name already exists!";
+        }
+    }
     LibraryReader reader = LibraryReaderFactory::createLibrarySubscriber(readerName);
     database->addReader(reader);
 }

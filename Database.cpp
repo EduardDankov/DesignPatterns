@@ -8,11 +8,6 @@ Database* Database::getInstance() {
 }
 
 void Database::addShelf(Shelf& shelf) {
-    for (auto& s : shelves) {
-        if (s.getTitle() == shelf.getTitle()) {
-            return throw "The shelf with such title already exists!";
-        }
-    }
     shelves.push_back(shelf);
 }
 
