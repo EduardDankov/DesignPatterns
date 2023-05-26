@@ -28,6 +28,10 @@ void LibraryModel::createBook(const std::string& title, const std::string& autho
 	facade->createBook(title, author, pageCount);
 }
 
+void LibraryModel::deleteBook(const std::string& title, const std::string& author, int pageCount) {
+	facade->deleteBook(title, author, pageCount);
+}
+
 void LibraryModel::placeBook(const std::string& bookTitle, const std::string& shelfTitle) {
 	facade->placeBook(bookTitle, shelfTitle);
 }

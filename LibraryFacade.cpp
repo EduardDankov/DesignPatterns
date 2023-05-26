@@ -56,6 +56,30 @@ void LibraryFacade::createBook(const std::string& title, const std::string& auth
     librarian->notify("Added new book: \"" + title + "\" by " + author);
 }
 
+void LibraryFacade::deleteBook(const std::string& title, const std::string& author, int pageCount) {
+    Book bookToDelete = BookFactory::createBook(title, author, pageCount);
+
+    if (pool->contains(title)) {
+        while (true) {
+            bookToDelete = pool->getBook();
+            if (bookToDelete.getTitle() != title) {
+                pool->returnBook(bookToDelete);
+            }
+            else break;
+        }
+        
+        if (bookToDelete.getAuthor() == author && bookToDelete.getPageCount() == pageCount) {
+            librarian->notify("Book \"" + bookToDelete.getTitle() + "\" by " + bookToDelete.getAuthor() + " was removed from library");
+        }
+        else {
+            throw "There is a book with such title but from different author or the different edition!";
+        }
+    }
+    else {
+        throw "The book with such name is on a shelf or doesn't exist at all!";
+    }
+}
+
 void LibraryFacade::placeBook(const std::string& bookTitle, const std::string& shelfTitle) {
     Book bookToPlace = BookFactory::createBook("", "", -1);
     Shelf* destinationShelf = nullptr;

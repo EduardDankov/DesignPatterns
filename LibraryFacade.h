@@ -26,6 +26,7 @@ public:
     void displayShelves(const std::string& title) const;
 
     void createBook(const std::string& title, const std::string& author, int pageCount);
+    void deleteBook(const std::string& title, const std::string& author, int pageCount);
     void placeBook(const std::string& bookTitle, const std::string& shelfTitle);
     void moveBook(const std::string& bookTitle, const std::string& sourceTitle, const std::string& destinationTitle);
     void displaceBook(const std::string& bookTitle, const std::string& shelfTitle);

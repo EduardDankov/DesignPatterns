@@ -111,8 +111,21 @@ void LibraryController::run(MenuSection section, int index) {
                     view->displayConfirmation();
                     break;
                 }
-                // placeBook
+                // deleteBook
                 case 2: {
+                    std::string title = view->getInput("Book title: ");
+                    std::string author = view->getInput("Book author: ");
+                    std::string pageCountString = view->getInput("Page count: ");
+                    if (title.length() <= 0 || author.length() <= 0 || pageCountString.length() <= 0) {
+                        throw "Invalid input!";
+                    }
+                    int pageCount = atoi(pageCountString.c_str());
+                    model->deleteBook(title, author, pageCount);
+                    view->displayConfirmation();
+                    break;
+                }
+                // placeBook
+                case 3: {
                     std::string bookTitle = view->getInput("Book title: ");
                     std::string shelfTitle = view->getInput("Shelf title: ");
                     if (bookTitle.length() <= 0 || shelfTitle.length() <= 0) {
@@ -123,7 +136,7 @@ void LibraryController::run(MenuSection section, int index) {
                     break;
                 }
                 // moveBook
-                case 3: {
+                case 4: {
                     std::string bookTitle = view->getInput("Book title: ");
                     std::string sourceTitle = view->getInput("Source shelf title: ");
                     std::string destinationTitle = view->getInput("Destination shelf title: ");
@@ -135,7 +148,7 @@ void LibraryController::run(MenuSection section, int index) {
                     break;
                 }
                 // displaceBook
-                case 4: {
+                case 5: {
                     std::string bookTitle = view->getInput("Book title: ");
                     std::string shelfTitle = view->getInput("Shelf title: ");
                     if (bookTitle.length() <= 0 || shelfTitle.length() <= 0) {
@@ -146,7 +159,7 @@ void LibraryController::run(MenuSection section, int index) {
                     break;
                 }
                 // displayUnplacedBooks
-                case 5: {
+                case 6: {
                     std::string title = view->getInput("Output title. You may leave it empty: ");
                     if (title.length() != 0) {
                         model->displayUnplacedBooks(title);
