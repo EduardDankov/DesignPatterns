@@ -134,6 +134,29 @@ void LibraryController::run(MenuSection section, int index) {
                     view->displayConfirmation();
                     break;
                 }
+                // displaceBook
+                case 4: {
+                    std::string bookTitle = view->getInput("Book title: ");
+                    std::string shelfTitle = view->getInput("Shelf title: ");
+                    if (bookTitle.length() <= 0 || shelfTitle.length() <= 0) {
+                        throw "Invalid input!";
+                    }
+                    model->displaceBook(bookTitle, shelfTitle);
+                    view->displayConfirmation();
+                    break;
+                }
+                // displayUnplacedBooks
+                case 5: {
+                    std::string title = view->getInput("Output title. You may leave it empty: ");
+                    if (title.length() != 0) {
+                        model->displayUnplacedBooks(title);
+                    }
+                    else {
+                        model->displayUnplacedBooks();
+                    }
+                    view->displayConfirmation();
+                    break;
+                }
                 default: {
                     throw "Invalid section index!";
                 }

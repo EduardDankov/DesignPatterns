@@ -24,6 +24,8 @@ void LibraryView::displayMenu(MenuSection section) {
 		std::cout << "1. Create a book" << std::endl;
 		std::cout << "2. Place a book on a shelf" << std::endl;
 		std::cout << "3. Replace a book on another shelf" << std::endl;
+		std::cout << "4. Remove a book from a shelf" << std::endl;
+		std::cout << "5. Display unplaced books list" << std::endl;
 		std::cout << "0. Exit" << std::endl;
 		break;
 	case Readers:

@@ -4,7 +4,5 @@
 
 class NewMoveStrategy : public MoveStrategy {
 public:
-    void moveBook(const Book& book, Shelf& sourceShelf, Shelf& destinationShelf) override {
-        destinationShelf.addBook(book);
-    }
+    void moveBook(const Book& book, Shelf& sourceShelf, Shelf& destinationShelf) override;
 };

@@ -32,7 +32,7 @@ void LibraryFacade::deleteShelf(const std::string& shelfTitle) {
     }
     if (deleteShelf) {
         for (auto& book : *(deleteShelf->getBooks())) {
-            pool->returnBook(book);
+            displaceBook(book.getTitle(), deleteShelf->getTitle());
         }
         database->removeShelf(*deleteShelf);
         librarian->notify("Removed the " + shelfTitle + " shelf");
@@ -131,6 +131,49 @@ void LibraryFacade::moveBook(const std::string& bookTitle, const std::string& so
     else {
         throw "Source shelf or destination shelf not found.";
     }
+}
+
+void LibraryFacade::displaceBook(const std::string& bookTitle, const std::string& shelfTitle) {
+    Book bookToDisplace = BookFactory::createBook("", "", -1);
+    Shelf* sourceShelf = nullptr;
+
+    for (auto& shelf : *database->getShelves()) {
+        if (shelf.getTitle() == shelfTitle) {
+            sourceShelf = &shelf;
+            break;
+        }
+    }
+
+    if (sourceShelf) {
+        for (auto& book : *sourceShelf->getBooks()) {
+            if (book.getTitle() == bookTitle) {
+                bookToDisplace = book;
+            }
+        }
+
+        if (bookToDisplace.getPageCount() != -1) {
+            if (moveStrategy) delete moveStrategy;
+            moveStrategy = new DisplaceMoveStrategy();
+
+            moveStrategy->moveBook(bookToDisplace, *sourceShelf, *sourceShelf);
+            pool->returnBook(bookToDisplace);
+            librarian->notify("Book \"" + bookToDisplace.getTitle() + "\" by " + bookToDisplace.getAuthor() + " was displaced from \"" + shelfTitle + "\" shelf");
+        }
+        else {
+            throw "Book to move not found.";
+        }
+    }
+    else {
+        throw "Source shelf not found.";
+    }
+}
+
+void LibraryFacade::displayUnplacedBooks() const {
+    pool->displayBooks();
+}
+
+void LibraryFacade::displayUnplacedBooks(const std::string& title) const {
+    pool->displayBooks(title);
 }
 
 void LibraryFacade::createReader(const std::string& readerName) {

@@ -36,6 +36,18 @@ void LibraryModel::moveBook(const std::string& bookTitle, const std::string& sou
 	facade->moveBook(bookTitle, sourceTitle, destinationTitle);
 }
 
+void LibraryModel::displaceBook(const std::string& bookTitle, const std::string& shelfTitle) {
+	facade->displaceBook(bookTitle, shelfTitle);
+}
+
+void LibraryModel::displayUnplacedBooks() const {
+	facade->displayUnplacedBooks();
+}
+
+void LibraryModel::displayUnplacedBooks(const std::string& title) const {
+	facade->displayUnplacedBooks(title);
+}
+
 void LibraryModel::createReader(const std::string& readerName) {
 	facade->createReader(readerName);
 }
