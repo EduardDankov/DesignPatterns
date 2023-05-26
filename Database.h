@@ -18,12 +18,12 @@ private:
 public:
     static Database* getInstance();
 
-    void addShelf(const Shelf& shelf);
+    void addShelf(Shelf& shelf);
     void displayShelves();
     void displayShelves(const std::string title);
     std::vector<Shelf>* getShelves();
 
-    void addReader(const LibraryReader& shelf);
+    void addReader(LibraryReader& shelf);
     void displayReaders();
     void displayReaders(const std::string title);
     std::vector<LibraryReader>* getReaders();

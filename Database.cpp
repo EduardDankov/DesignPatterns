@@ -7,7 +7,12 @@ Database* Database::getInstance() {
     return instance;
 }
 
-void Database::addShelf(const Shelf& shelf) {
+void Database::addShelf(Shelf& shelf) {
+    for (auto& s : shelves) {
+        if (s.getTitle() == shelf.getTitle()) {
+            return throw "The shelf with such title already exists!";
+        }
+    }
     shelves.push_back(shelf);
 }
 
@@ -27,7 +32,12 @@ std::vector<Shelf>* Database::getShelves() {
     return &shelves;
 }
 
-void Database::addReader(const LibraryReader& reader) {
+void Database::addReader(LibraryReader& reader) {
+    for (auto& r : readers) {
+        if (r.getName() == reader.getName()) {
+            return throw "The reader with such name already exists!";
+        }
+    }
     readers.push_back(reader);
 }
 
