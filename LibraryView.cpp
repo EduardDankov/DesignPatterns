@@ -49,6 +49,43 @@ void LibraryView::displayInputError() {
 	std::cout << "You entered invalid value!" << std::endl;
 }
 
+void LibraryView::displayShelves(std::vector<Shelf> shelves) {
+	for (auto& shelf : shelves) {
+		std::cout << "Shelf: " << shelf.getTitle() << " - " << (*shelf.getBooks()).size() << " book(s)" << std::endl;
+
+		for (const auto& book : *shelf.getBooks()) {
+			std::cout << "Title: \"" << book.getTitle() << "\", Author: " << book.getAuthor() << ", Page Count: " << book.getPageCount() << std::endl;
+		}
+	}
+}
+
+void LibraryView::displayShelves(std::vector<Shelf> shelves, const std::string title) {
+	std::cout << " === " << title << " === " << std::endl;
+	displayShelves(shelves);
+}
+
+void LibraryView::displayUnplacedBooks(std::vector<Book> books) const {
+	for (const auto& book : books) {
+		std::cout << "Title: \"" << book.getTitle() << "\", Author: " << book.getAuthor() << ", Page Count: " << book.getPageCount() << std::endl;
+	}
+}
+
+void LibraryView::displayUnplacedBooks(std::vector<Book> books, const std::string title) const {
+	std::cout << " === " << title << " === " << std::endl;
+	displayUnplacedBooks(books);
+}
+
+void LibraryView::displayReaders(std::vector<LibraryReader> readers) {
+	for (auto& reader : readers) {
+		std::cout << reader.getName() << std::endl;
+	}
+}
+
+void LibraryView::displayReaders(std::vector<LibraryReader> readers, const std::string title) {
+	std::cout << " === " << title << " === " << std::endl;
+	displayReaders(readers);
+}
+
 std::string LibraryView::getInput(const std::string& prompt) {
 	std::string input;
 	std::cout << prompt;

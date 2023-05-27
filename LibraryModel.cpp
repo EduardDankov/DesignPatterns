@@ -16,12 +16,8 @@ void LibraryModel::deleteShelf(const std::string& shelfTitle) {
 	facade->deleteShelf(shelfTitle);
 }
 
-void LibraryModel::displayShelves() const {
-	facade->displayShelves();
-}
-
-void LibraryModel::displayShelves(const std::string& title) const {
-	facade->displayShelves(title);
+std::vector<Shelf> LibraryModel::getShelves() {
+	return facade->getShelves();
 }
 
 void LibraryModel::createBook(const std::string& title, const std::string& author, int pageCount) {
@@ -44,12 +40,8 @@ void LibraryModel::displaceBook(const std::string& bookTitle, const std::string&
 	facade->displaceBook(bookTitle, shelfTitle);
 }
 
-void LibraryModel::displayUnplacedBooks() const {
-	facade->displayUnplacedBooks();
-}
-
-void LibraryModel::displayUnplacedBooks(const std::string& title) const {
-	facade->displayUnplacedBooks(title);
+std::vector<Book> LibraryModel::getUnplacedBooks() {
+	return facade->getUnplacedBooks();
 }
 
 void LibraryModel::createReader(const std::string& readerName) {
@@ -60,12 +52,8 @@ void LibraryModel::deleteReader(const std::string& readerName) {
 	facade->deleteReader(readerName);
 }
 
-void LibraryModel::displayReaders() const {
-	facade->displayReaders();
-}
-
-void LibraryModel::displayReaders(const std::string& title) const {
-	facade->displayReaders(title);
+std::vector<LibraryReader> LibraryModel::getReaders() {
+	return facade->getReaders();
 }
 
 void LibraryModel::subscribe(const std::string& readerName) {

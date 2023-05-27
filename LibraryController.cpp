@@ -56,186 +56,186 @@ void LibraryController::run(MenuSection section) {
 void LibraryController::run(MenuSection section, int index) {
     try {
         switch (section) {
-        case Shelves: {
-            switch (index) {
-                // createShelf
-                case 1: {
-                    std::string shelfTitle = view->getInput("Shelf title: ");
-                    if (shelfTitle.length() <= 0) {
-                        throw "Invalid input!";
+            case Shelves: {
+                switch (index) {
+                    // createShelf
+                    case 1: {
+                        std::string shelfTitle = view->getInput("Shelf title: ");
+                        if (shelfTitle.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->createShelf(shelfTitle);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->createShelf(shelfTitle);
-                    view->displayConfirmation();
-                    break;
-                }
-                // deleteShelf
-                case 2: {
-                    std::string shelfTitle = view->getInput("Shelf title: ");
-                    if (shelfTitle.length() <= 0) {
-                        throw "Invalid input!";
+                    // deleteShelf
+                    case 2: {
+                        std::string shelfTitle = view->getInput("Shelf title: ");
+                        if (shelfTitle.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->deleteShelf(shelfTitle);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->deleteShelf(shelfTitle);
-                    view->displayConfirmation();
-                    break;
-                }
-                // displayShelves
-                case 3: {
-                    std::string title = view->getInput("Output title. You may leave it empty: ");
-                    if (title.length() != 0) {
-                        model->displayShelves(title);
+                    // displayShelves
+                    case 3: {
+                        std::string title = view->getInput("Output title. You may leave it empty: ");
+                        if (title.length() != 0) {
+                            view->displayShelves(model->getShelves(), title);
+                        }
+                        else {
+                            view->displayShelves(model->getShelves());
+                        }
+                        view->displayConfirmation();
+                        break;
                     }
-                    else {
-                        model->displayShelves();
+                    default: {
+                        throw "Invalid section index!";
                     }
-                    view->displayConfirmation();
-                    break;
                 }
-                default: {
-                    throw "Invalid section index!";
-                }
+                break;
             }
-            break;
-        }
-        case Books: {
-            switch (index) {
-                // createBook
-                case 1: {
-                    std::string title = view->getInput("Book title: ");
-                    std::string author = view->getInput("Book author: ");
-                    std::string pageCountString = view->getInput("Page count: ");
-                    if (title.length() <= 0 || author.length() <= 0 || pageCountString.length() <= 0) {
-                        throw "Invalid input!";
+            case Books: {
+                switch (index) {
+                    // createBook
+                    case 1: {
+                        std::string title = view->getInput("Book title: ");
+                        std::string author = view->getInput("Book author: ");
+                        std::string pageCountString = view->getInput("Page count: ");
+                        if (title.length() <= 0 || author.length() <= 0 || pageCountString.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        int pageCount = atoi(pageCountString.c_str());
+                        model->createBook(title, author, pageCount);
+                        view->displayConfirmation();
+                        break;
                     }
-                    int pageCount = atoi(pageCountString.c_str());
-                    model->createBook(title, author, pageCount);
-                    view->displayConfirmation();
-                    break;
-                }
-                // deleteBook
-                case 2: {
-                    std::string title = view->getInput("Book title: ");
-                    std::string author = view->getInput("Book author: ");
-                    std::string pageCountString = view->getInput("Page count: ");
-                    if (title.length() <= 0 || author.length() <= 0 || pageCountString.length() <= 0) {
-                        throw "Invalid input!";
+                    // deleteBook
+                    case 2: {
+                        std::string title = view->getInput("Book title: ");
+                        std::string author = view->getInput("Book author: ");
+                        std::string pageCountString = view->getInput("Page count: ");
+                        if (title.length() <= 0 || author.length() <= 0 || pageCountString.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        int pageCount = atoi(pageCountString.c_str());
+                        model->deleteBook(title, author, pageCount);
+                        view->displayConfirmation();
+                        break;
                     }
-                    int pageCount = atoi(pageCountString.c_str());
-                    model->deleteBook(title, author, pageCount);
-                    view->displayConfirmation();
-                    break;
-                }
-                // placeBook
-                case 3: {
-                    std::string bookTitle = view->getInput("Book title: ");
-                    std::string shelfTitle = view->getInput("Shelf title: ");
-                    if (bookTitle.length() <= 0 || shelfTitle.length() <= 0) {
-                        throw "Invalid input!";
+                    // placeBook
+                    case 3: {
+                        std::string bookTitle = view->getInput("Book title: ");
+                        std::string shelfTitle = view->getInput("Shelf title: ");
+                        if (bookTitle.length() <= 0 || shelfTitle.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->placeBook(bookTitle, shelfTitle);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->placeBook(bookTitle, shelfTitle);
-                    view->displayConfirmation();
-                    break;
-                }
-                // moveBook
-                case 4: {
-                    std::string bookTitle = view->getInput("Book title: ");
-                    std::string sourceTitle = view->getInput("Source shelf title: ");
-                    std::string destinationTitle = view->getInput("Destination shelf title: ");
-                    if (bookTitle.length() <= 0 || sourceTitle.length() <= 0 || destinationTitle.length() <= 0) {
-                        throw "Invalid input!";
+                    // moveBook
+                    case 4: {
+                        std::string bookTitle = view->getInput("Book title: ");
+                        std::string sourceTitle = view->getInput("Source shelf title: ");
+                        std::string destinationTitle = view->getInput("Destination shelf title: ");
+                        if (bookTitle.length() <= 0 || sourceTitle.length() <= 0 || destinationTitle.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->moveBook(bookTitle, sourceTitle, destinationTitle);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->moveBook(bookTitle, sourceTitle, destinationTitle);
-                    view->displayConfirmation();
-                    break;
-                }
-                // displaceBook
-                case 5: {
-                    std::string bookTitle = view->getInput("Book title: ");
-                    std::string shelfTitle = view->getInput("Shelf title: ");
-                    if (bookTitle.length() <= 0 || shelfTitle.length() <= 0) {
-                        throw "Invalid input!";
+                    // displaceBook
+                    case 5: {
+                        std::string bookTitle = view->getInput("Book title: ");
+                        std::string shelfTitle = view->getInput("Shelf title: ");
+                        if (bookTitle.length() <= 0 || shelfTitle.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->displaceBook(bookTitle, shelfTitle);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->displaceBook(bookTitle, shelfTitle);
-                    view->displayConfirmation();
-                    break;
-                }
-                // displayUnplacedBooks
-                case 6: {
-                    std::string title = view->getInput("Output title. You may leave it empty: ");
-                    if (title.length() != 0) {
-                        model->displayUnplacedBooks(title);
+                    // displayUnplacedBooks
+                    case 6: {
+                        std::string title = view->getInput("Output title. You may leave it empty: ");
+                        if (title.length() != 0) {
+                            view->displayUnplacedBooks(model->getUnplacedBooks(), title);
+                        }
+                        else {
+                            view->displayUnplacedBooks(model->getUnplacedBooks());
+                        }
+                        view->displayConfirmation();
+                        break;
                     }
-                    else {
-                        model->displayUnplacedBooks();
+                    default: {
+                        throw "Invalid section index!";
                     }
-                    view->displayConfirmation();
-                    break;
                 }
-                default: {
-                    throw "Invalid section index!";
-                }
+                break;
             }
-            break;
-        }
-        case Readers: {
-            switch (index) {
-                // createReader
-                case 1: {
-                    std::string readerName = view->getInput("Reader name: ");
-                    if (readerName.length() <= 0) {
-                        throw "Invalid input!";
+            case Readers: {
+                switch (index) {
+                    // createReader
+                    case 1: {
+                        std::string readerName = view->getInput("Reader name: ");
+                        if (readerName.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->createReader(readerName);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->createReader(readerName);
-                    view->displayConfirmation();
-                    break;
-                }
-                // deleteReader
-                case 2: {
-                    std::string readerName = view->getInput("Reader name: ");
-                    if (readerName.length() <= 0) {
-                        throw "Invalid input!";
+                    // deleteReader
+                    case 2: {
+                        std::string readerName = view->getInput("Reader name: ");
+                        if (readerName.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->deleteReader(readerName);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->deleteReader(readerName);
-                    view->displayConfirmation();
-                    break;
-                }
-                // displayReaders
-                case 3: {
-                    std::string title = view->getInput("Output title. You may leave it empty: ");
-                    if (title.length() != 0) {
-                        model->displayReaders(title);
+                    // displayReaders
+                    case 3: {
+                        std::string title = view->getInput("Output title. You may leave it empty: ");
+                        if (title.length() != 0) {
+                            view->displayReaders(model->getReaders(), title);
+                        }
+                        else {
+                            view->displayReaders(model->getReaders());
+                        }
+                        view->displayConfirmation();
+                        break;
                     }
-                    else {
-                        model->displayReaders();
+                    // subscribe
+                    case 4: {
+                        std::string readerName = view->getInput("Reader name: ");
+                        if (readerName.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->subscribe(readerName);
+                        view->displayConfirmation();
+                        break;
                     }
-                    view->displayConfirmation();
-                    break;
-                }
-                // subscribe
-                case 4: {
-                    std::string readerName = view->getInput("Reader name: ");
-                    if (readerName.length() <= 0) {
-                        throw "Invalid input!";
+                    // unsubscribe
+                    case 5: {
+                        std::string readerName = view->getInput("Reader name: ");
+                        if (readerName.length() <= 0) {
+                            throw "Invalid input!";
+                        }
+                        model->unsubscribe(readerName);
+                        view->displayConfirmation();
+                        break;
                     }
-                    model->subscribe(readerName);
-                    view->displayConfirmation();
-                    break;
-                }
-                // unsubscribe
-                case 5: {
-                    std::string readerName = view->getInput("Reader name: ");
-                    if (readerName.length() <= 0) {
-                        throw "Invalid input!";
+                    default: {
+                        throw "Invalid section index!";
                     }
-                    model->unsubscribe(readerName);
-                    view->displayConfirmation();
-                    break;
                 }
-                default: {
-                    throw "Invalid section index!";
-                }
+                break;
             }
-            break;
-        }
         }
     }
     catch (...) {

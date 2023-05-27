@@ -42,12 +42,8 @@ void LibraryFacade::deleteShelf(const std::string& shelfTitle) {
     }
 }
 
-void LibraryFacade::displayShelves() const {
-    database->displayShelves();
-}
-
-void LibraryFacade::displayShelves(const std::string& title) const {
-    database->displayShelves(title);
+std::vector<Shelf> LibraryFacade::getShelves() {
+    return *database->getShelves();
 }
 
 void LibraryFacade::createBook(const std::string& title, const std::string& author, int pageCount) {
@@ -61,7 +57,7 @@ void LibraryFacade::deleteBook(const std::string& title, const std::string& auth
 
     if (pool->contains(title)) {
         while (true) {
-            bookToDelete = pool->getBook();
+            bookToDelete = pool->takeBook();
             if (bookToDelete.getTitle() != title) {
                 pool->returnBook(bookToDelete);
             }
@@ -94,7 +90,7 @@ void LibraryFacade::placeBook(const std::string& bookTitle, const std::string& s
     if (destinationShelf) {
         if (pool->contains(bookTitle)) {
             while (true) {
-                bookToPlace = pool->getBook();
+                bookToPlace = pool->takeBook();
                 if (bookToPlace.getTitle() != bookTitle) {
                     pool->returnBook(bookToPlace);
                 }
@@ -192,12 +188,8 @@ void LibraryFacade::displaceBook(const std::string& bookTitle, const std::string
     }
 }
 
-void LibraryFacade::displayUnplacedBooks() const {
-    pool->displayBooks();
-}
-
-void LibraryFacade::displayUnplacedBooks(const std::string& title) const {
-    pool->displayBooks(title);
+std::vector<Book> LibraryFacade::getUnplacedBooks() {
+    return pool->getBooks();
 }
 
 void LibraryFacade::createReader(const std::string& readerName) {
@@ -226,12 +218,8 @@ void LibraryFacade::deleteReader(const std::string& readerName) {
     }
 }
 
-void LibraryFacade::displayReaders() const {
-    database->displayReaders();
-}
-
-void LibraryFacade::displayReaders(const std::string& title) const {
-    database->displayReaders(title);
+std::vector<LibraryReader> LibraryFacade::getReaders() {
+    return *database->getReaders();
 }
 
 void LibraryFacade::subscribe(const std::string& readerName) {
