@@ -98,7 +98,7 @@ void LibraryFacade::placeBook(const std::string& bookTitle, const std::string& s
             }
 
             if (moveStrategy) delete moveStrategy;
-            moveStrategy = new NewMoveStrategy();
+            moveStrategy = new PlaceMoveStrategy();
 
             moveStrategy->moveBook(bookToPlace, *destinationShelf, *destinationShelf);
             librarian->notify("Book \"" + bookToPlace.getTitle() + "\" by " + bookToPlace.getAuthor() + " was placed on \"" + shelfTitle + "\" shelf");
@@ -139,7 +139,7 @@ void LibraryFacade::moveBook(const std::string& bookTitle, const std::string& so
 
         if (bookToMove.getPageCount() != -1) {
             if (moveStrategy) delete moveStrategy;
-            moveStrategy = new ExistingMoveStrategy();
+            moveStrategy = new ReplaceMoveStrategy();
 
             moveStrategy->moveBook(bookToMove, *sourceShelf, *destinationShelf);
             librarian->notify("Book \"" + bookToMove.getTitle() + "\" by " + bookToMove.getAuthor() + " was replaced on \"" + destinationTitle + "\" shelf");
