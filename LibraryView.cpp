@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "LibraryView.h"
 
 void LibraryView::displayMenu() {
