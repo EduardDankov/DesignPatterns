@@ -4,5 +4,5 @@
 class LibraryReaderFactory
 {
 public:
-	static LibraryReader createLibrarySubscriber(const std::string& name);
+	static LibraryReader createLibraryReader(const std::string& name);
 };

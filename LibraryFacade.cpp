@@ -198,7 +198,7 @@ void LibraryFacade::createReader(const std::string& readerName) {
             return throw "The reader with such name already exists!";
         }
     }
-    LibraryReader reader = LibraryReaderFactory::createLibrarySubscriber(readerName);
+    LibraryReader reader = LibraryReaderFactory::createLibraryReader(readerName);
     database->addReader(reader);
 }
 
