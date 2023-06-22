@@ -2,7 +2,7 @@
 
 LibraryFacade::LibraryFacade() {
     database = Database::getInstance();
-    librarian = Librarian::getInstance();
+    subscriptionManager = SubscriptionManager::getInstance();
     pool = new BookPool();
     moveStrategy = nullptr;
 }
@@ -20,7 +20,7 @@ void LibraryFacade::createShelf(const std::string& shelfTitle) {
     }
     Shelf shelf = ShelfBuilder(shelfTitle).build();
     database->addShelf(shelf);
-    librarian->notify("Added new shelf: " + shelfTitle);
+    subscriptionManager->notify("Added new shelf: " + shelfTitle);
 }
 
 void LibraryFacade::deleteShelf(const std::string& shelfTitle) {
@@ -35,7 +35,7 @@ void LibraryFacade::deleteShelf(const std::string& shelfTitle) {
             displaceBook(book.getTitle(), deleteShelf->getTitle());
         }
         database->removeShelf(*deleteShelf);
-        librarian->notify("Removed the " + shelfTitle + " shelf");
+        subscriptionManager->notify("Removed the " + shelfTitle + " shelf");
     }
     else {
         throw "The shelf with such title doesn't exist!";
@@ -49,7 +49,7 @@ std::vector<Shelf> LibraryFacade::getShelves() {
 void LibraryFacade::createBook(const std::string& title, const std::string& author, int pageCount) {
     Book book = BookFactory::createBook(title, author, pageCount);
     pool->returnBook(book);
-    librarian->notify("Added new book: \"" + title + "\" by " + author);
+    subscriptionManager->notify("Added new book: \"" + title + "\" by " + author);
 }
 
 void LibraryFacade::deleteBook(const std::string& title, const std::string& author, int pageCount) {
@@ -65,7 +65,7 @@ void LibraryFacade::deleteBook(const std::string& title, const std::string& auth
         }
         
         if (bookToDelete.getAuthor() == author && bookToDelete.getPageCount() == pageCount) {
-            librarian->notify("Book \"" + bookToDelete.getTitle() + "\" by " + bookToDelete.getAuthor() + " was removed from library");
+            subscriptionManager->notify("Book \"" + bookToDelete.getTitle() + "\" by " + bookToDelete.getAuthor() + " was removed from library");
         }
         else {
             throw "There is a book with such title but from different author or the different edition!";
@@ -101,7 +101,7 @@ void LibraryFacade::placeBook(const std::string& bookTitle, const std::string& s
             moveStrategy = new PlaceMoveStrategy();
 
             moveStrategy->moveBook(bookToPlace, *destinationShelf, *destinationShelf);
-            librarian->notify("Book \"" + bookToPlace.getTitle() + "\" by " + bookToPlace.getAuthor() + " was placed on \"" + shelfTitle + "\" shelf");
+            subscriptionManager->notify("Book \"" + bookToPlace.getTitle() + "\" by " + bookToPlace.getAuthor() + " was placed on \"" + shelfTitle + "\" shelf");
         }
         else {
             throw "Book to move not found.";
@@ -142,7 +142,7 @@ void LibraryFacade::moveBook(const std::string& bookTitle, const std::string& so
             moveStrategy = new ReplaceMoveStrategy();
 
             moveStrategy->moveBook(bookToMove, *sourceShelf, *destinationShelf);
-            librarian->notify("Book \"" + bookToMove.getTitle() + "\" by " + bookToMove.getAuthor() + " was replaced on \"" + destinationTitle + "\" shelf");
+            subscriptionManager->notify("Book \"" + bookToMove.getTitle() + "\" by " + bookToMove.getAuthor() + " was replaced on \"" + destinationTitle + "\" shelf");
         }
         else {
             throw "Book to move not found.";
@@ -177,7 +177,7 @@ void LibraryFacade::displaceBook(const std::string& bookTitle, const std::string
 
             moveStrategy->moveBook(bookToDisplace, *sourceShelf, *sourceShelf);
             pool->returnBook(bookToDisplace);
-            librarian->notify("Book \"" + bookToDisplace.getTitle() + "\" by " + bookToDisplace.getAuthor() + " was displaced from \"" + shelfTitle + "\" shelf");
+            subscriptionManager->notify("Book \"" + bookToDisplace.getTitle() + "\" by " + bookToDisplace.getAuthor() + " was displaced from \"" + shelfTitle + "\" shelf");
         }
         else {
             throw "Book to move not found.";
@@ -210,7 +210,7 @@ void LibraryFacade::deleteReader(const std::string& readerName) {
         }
     }
     if (deleteReader) {
-        librarian->unsubscribe(deleteReader);
+        subscriptionManager->unsubscribe(deleteReader);
         database->removeReader(*deleteReader);
     }
     else {
@@ -233,7 +233,7 @@ void LibraryFacade::subscribe(const std::string& readerName) {
     }
 
     if (reader) {
-        librarian->subscribe(reader);
+        subscriptionManager->subscribe(reader);
     }
     else {
         throw "Reader not found";
@@ -251,7 +251,7 @@ void LibraryFacade::unsubscribe(const std::string& readerName) {
     }
 
     if (reader) {
-        librarian->unsubscribe(reader);
+        subscriptionManager->unsubscribe(reader);
     }
     else {
         throw "Reader not found";

@@ -6,13 +6,13 @@
 #include "PlaceMoveStrategy.h"
 #include "ReplaceMoveStrategy.h"
 #include "DisplaceMoveStrategy.h"
-#include "Librarian.h"
+#include "SubscriptionManager.h"
 #include "LibraryReaderFactory.h"
 
 class LibraryFacade {
 private:
     Database* database;
-    Librarian* librarian;
+    SubscriptionManager* subscriptionManager;
     BookPool* pool;
     MoveStrategy* moveStrategy;
 
